@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { signInFailure, signInStart, signInSuccess } from "../redux/features/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const {loading, error} = useSelector((state:RootState) => state.user)
+
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -24,7 +29,7 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart())
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -34,16 +39,13 @@ const SignIn = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        setError(data.message);
-        setLoading(false);
+        dispatch(signInFailure(data.message))
         return;
       }
-      setError(null);
-      setLoading(false)
+      dispatch(signInSuccess(data))
       navigate("/");
     } catch (error: unknown) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message))
     }
   };
 
