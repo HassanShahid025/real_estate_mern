@@ -1,5 +1,4 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import React from "react";
 import { app } from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/features/userSlice";

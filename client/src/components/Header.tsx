@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Header = () => {
 
+  const {currentUser} = useSelector((store:RootState) => store.user)
 
-  const currentUser = null
   const handleSubmit = () => {}
 
   return (
@@ -41,6 +43,7 @@ const Header = () => {
             About
           </li>
         </Link>
+
         <Link to='/profile'>
           {currentUser ? (
             <img
@@ -52,6 +55,7 @@ const Header = () => {
             <li className=' text-slate-700 hover:underline'> Sign in</li>
           )}
         </Link>
+
       </ul>
     </div>
   </header>
