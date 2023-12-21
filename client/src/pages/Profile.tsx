@@ -11,6 +11,9 @@ import {
 import { app } from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -108,8 +111,24 @@ const Profile = () => {
     }
   }, [file]);
 
+  const handleDeleteUser = async() => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser?._id}`, {
+        method:'DELETE',
+      })
+      const data = await res.json()
+      if(data.success  === false){
+        dispatch(deleteUserFailure(data.message))
+        return
+      }
+      dispatch(deleteUserSuccess());
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
+  };
+
   const handleSignOut = () => {};
-  const handleDeleteUser = () => {};
 
   return (
     <div className="p-3 max-w-lg mx-auto">

@@ -6,14 +6,13 @@ type initialStateType = {
     email: string;
     _id: string;
     avatar: string;
-    [key: string]: unknown; 
-  } | null,
-  error: null | string,
-  loading: boolean,
+    [key: string]: unknown;
+  } | null;
+  error: null | string;
+  loading: boolean;
 };
 
-
-const initialState:initialStateType = {
+const initialState: initialStateType = {
   currentUser: null,
   error: null,
   loading: false,
@@ -35,21 +34,43 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    updateUserStart : (state) => {
+    updateUserStart: (state) => {
       state.loading = true;
     },
-    updateUserSuccess : (state, action) => {
-      state.currentUser = action.payload
+    updateUserSuccess: (state, action) => {
+      state.currentUser = action.payload;
       state.loading = false;
-      state.error = null
+      state.error = null;
     },
-    updateUserFailure : (state,action) => {
+    updateUserFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload
-    }
+      state.error = action.payload;
+    },
+    deleteUserStart: (state) => {
+      state.loading = true;
+    },
+    deleteUserSuccess: (state) => {
+      state.currentUser = null;
+      state.loading = false;
+      state.error = null;
+    },
+    deleteUserFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
   },
 });
 
-export const { signInFailure, signInStart, signInSuccess,updateUserStart,updateUserSuccess,updateUserFailure } = userSlice.actions;
+export const {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserStart,
+  deleteUserFailure,
+  deleteUserSuccess,
+} = userSlice.actions;
 
 export default userSlice.reducer;
