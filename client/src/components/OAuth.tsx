@@ -3,12 +3,15 @@ import { app } from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const OAuth = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | boolean>(false);
 
   const handleGoogleClick = async () => {
+    setError(false)
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
@@ -29,13 +32,15 @@ const OAuth = () => {
       });
       const data = await res.json();
       dispatch(signInSuccess(data));
-      navigate('/')
+      navigate("/");
     } catch (error) {
       console.log("Could not sign in with google", error);
+      setError("Could not sign in with google" + error);
     }
   };
 
   return (
+    <>
     <button
       onClick={handleGoogleClick}
       type="button"
@@ -43,6 +48,8 @@ const OAuth = () => {
     >
       Continue with google
     </button>
+    {error && <p className="text-red-500 mt-5">{error}</p>}
+    </>
   );
 };
 

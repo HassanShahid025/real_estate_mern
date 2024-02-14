@@ -7,8 +7,10 @@ import 'swiper/css/bundle';
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { FaShare,FaMapMarkerAlt,FaBed,FaBath,FaParking,FaChair  } from "react-icons/fa";
+import { serverTimestamp } from "firebase/firestore/lite";
+import Contact from "../components/Contact";
 
-type ListingType = {
+export type ListingType = {
   imageUrls: string[];
   name: string;
   description: string;
@@ -31,6 +33,7 @@ const Listing = () => {
   const [error, setError] = useState<string | boolean>(false);
   const [contact, setContact] = useState(false);
     const [copied, setCopied] = useState(false);
+
 
   const {currentUser} = useSelector((state:RootState) => state.user);
 
@@ -142,7 +145,9 @@ const Listing = () => {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {
+            currentUser && listing.userRef !== currentUser._id && !contact
+             && (
               <button
                 onClick={() => setContact(true)}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
@@ -150,7 +155,7 @@ const Listing = () => {
                 Contact landlord
               </button>
             )}
-            {/* {contact && <Contact listing={listing} />} */}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}
