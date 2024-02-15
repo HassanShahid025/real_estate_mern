@@ -23,6 +23,7 @@ import {
 } from "../redux/features/userSlice";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
+import { FaUserAlt } from "react-icons/fa";
 
 // type formDataType = {
 //   username: string;
@@ -50,9 +51,9 @@ const Profile = () => {
   const [showListingError, setShowlistingError] = useState<string | boolean>(
     false
   );
-  const [functionStart, setFunctionStart] = useState(false)
+  const [functionStart, setFunctionStart] = useState(false);
 
-  const [ userListings, setUserListings ] = useState<unknown[] | null>(null)
+  const [userListings, setUserListings] = useState<unknown[] | null>(null);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -160,32 +161,35 @@ const Profile = () => {
         setShowlistingError(listings.message);
         return;
       }
-      setUserListings(listings)
-      console.log(userListings)
+      setUserListings(listings);
+      console.log(userListings);
     } catch (error) {
       setShowlistingError(true);
     }
   };
 
   const handleListingDelete = async (id: string) => {
-    setFunctionStart(true)
+    setFunctionStart(true);
     try {
       const res = await fetch(`/api/listing/delete/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
-      setFunctionStart(false)
+      setFunctionStart(false);
       if (data.success === false) {
         console.log(data.message);
         return;
       }
-      setUserListings(userListings?.filter((listing:unknown) => listing._id !== id))
-
+      setUserListings(
+        userListings?.filter((listing: unknown) => listing._id !== id)
+      );
     } catch (error) {
-      setFunctionStart(false)
+      setFunctionStart(false);
       console.log(error.message);
     }
   };
+
+  console.log(currentUser!.avatar);
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -198,12 +202,20 @@ const Profile = () => {
           hidden
           accept="image/*"
         />
-        <img
-          onClick={() => fileRef.current!.click()}
-          src={formData.avatar || currentUser!.avatar}
-          alt="profile"
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
-        />
+        {currentUser!.avatar ? (
+          <img
+            onClick={() => fileRef.current!.click()}
+            src={currentUser!.avatar || formData.avatar}
+            alt="profile"
+            className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+          />
+        ) : (
+          <FaUserAlt
+            onClick={() => fileRef.current!.click()}
+            className="text-9xl text-slate-700 cursor-pointer self-center"
+          />
+        )}
+
         <p className="text-sm self-center">
           {fileUploadError ? (
             <span className="text-red-700">
@@ -290,7 +302,11 @@ const Profile = () => {
       <button onClick={handleShowListing} className="text-green-700 w-full">
         Show Listings
       </button>
-      {showListingError && <p className="text-red-500 mt-5">Error occured while showing listings</p>}
+      {showListingError && (
+        <p className="text-red-500 mt-5">
+          Error occured while showing listings
+        </p>
+      )}
 
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
