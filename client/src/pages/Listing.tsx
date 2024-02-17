@@ -7,10 +7,10 @@ import 'swiper/css/bundle';
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { FaShare,FaMapMarkerAlt,FaBed,FaBath,FaParking,FaChair  } from "react-icons/fa";
-import { serverTimestamp } from "firebase/firestore/lite";
 import Contact from "../components/Contact";
 
 export type ListingType = {
+  _id: string;
   imageUrls: string[];
   name: string;
   description: string;
