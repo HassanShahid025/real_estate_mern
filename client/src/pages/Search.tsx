@@ -69,6 +69,7 @@ const Search = () => {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
+      |any
   ) => {
     if (
       e.target.id === "all" ||

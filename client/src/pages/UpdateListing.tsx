@@ -10,13 +10,14 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase/firebase";
+import { formDataType } from "./CreateListing";
 
 const UpdateListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const params = useParams();
   const [files, setFiles] = useState<FileList | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formDataType>({
     imageUrls: [],
     name: "",
     description: "",
@@ -58,6 +59,7 @@ const UpdateListing = () => {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
+      | any
   ) => {
     if (e.target?.id === "sale" || e.target.id === "rent") {
       setFormData({

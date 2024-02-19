@@ -11,8 +11,8 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase/firebase";
 
-type formDataType = {
-  imageUrls: string[];
+export type formDataType = {
+  imageUrls: any[];
   name: string;
   description: string;
   address: string;
@@ -56,6 +56,7 @@ const CreateListing = () => {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
+      | any
   ) => {
     if (e.target?.id === "sale" || e.target.id === "rent") {
       setFormData({
@@ -184,7 +185,7 @@ const CreateListing = () => {
         setError(data.message);
       }
       navigate(`/listing/${data._id}`);
-    } catch (error:unknown) {
+    } catch (error:any) {
       setError(error.message);
       setLoading(false);
     }
