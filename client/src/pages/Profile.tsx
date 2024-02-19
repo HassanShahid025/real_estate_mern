@@ -24,6 +24,7 @@ import {
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
+import { ListingType } from "./Listing";
 
 // type formDataType = {
 //   username: string;
@@ -53,7 +54,7 @@ const Profile = () => {
   );
   const [functionStart, setFunctionStart] = useState(false);
 
-  const [userListings, setUserListings] = useState<unknown[] | null>(null);
+  const [userListings, setUserListings] = useState<ListingType[]>([]);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -85,7 +86,7 @@ const Profile = () => {
       }
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(updateUserFailure(error.message));
     }
   };
@@ -104,6 +105,7 @@ const Profile = () => {
         setFilePerc(Math.round(progress));
       },
       (error) => {
+        console.log(error.message);
         setFileUploadError(true);
       },
       () => {
@@ -132,7 +134,7 @@ const Profile = () => {
         return;
       }
       dispatch(deleteUserSuccess());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(deleteUserFailure(error.message));
     }
   };
@@ -147,7 +149,7 @@ const Profile = () => {
         return;
       }
       dispatch(signOutUserSuccess());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(signOutUserFailure(error.message));
     }
   };
@@ -181,9 +183,9 @@ const Profile = () => {
         return;
       }
       setUserListings(
-        userListings?.filter((listing: unknown) => listing._id !== id)
+        userListings?.filter((listing) => listing._id !== id)
       );
-    } catch (error) {
+    } catch (error:any) {
       setFunctionStart(false);
       console.log(error.message);
     }

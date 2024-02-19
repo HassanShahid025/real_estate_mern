@@ -1,18 +1,17 @@
-import React,{ useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import SwiperCore from 'swiper';
-import 'swiper/css/bundle';
-import { ListingType } from './Listing';
-import ListingItem from '../components/ListingItem';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import SwiperCore from "swiper";
+import "swiper/css/bundle";
+import { ListingType } from "./Listing";
+import ListingItem from "../components/ListingItem";
 
 const Home = () => {
-
   const [offerListings, setOfferListings] = useState<ListingType[]>([]);
   const [saleListings, setSaleListings] = useState<ListingType[]>([]);
   const [rentListings, setRentListings] = useState<ListingType[]>([]);
-  console.log(saleListings)
+  console.log(saleListings);
 
   SwiperCore.use([Navigation]);
 
@@ -22,32 +21,32 @@ const Home = () => {
         const response = await fetch("/api/listing/get?offer=true&limit=4");
         const data = await response.json();
         setOfferListings(data);
-        fetchRentListings()
+        fetchRentListings();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     const fetchRentListings = async () => {
       try {
         const response = await fetch("/api/listing/get?type=rent&limit=4");
         const data = await response.json();
         setRentListings(data);
-        fetchSaleListings()
+        fetchSaleListings();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     const fetchSaleListings = async () => {
       try {
         const response = await fetch("/api/listing/get?type=sale&limit=4");
         const data = await response.json();
         setSaleListings(data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-    fetchOfferListings()
-  },[])
+    };
+    fetchOfferListings();
+  }, []);
 
   return (
     <div>

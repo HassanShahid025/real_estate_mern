@@ -42,7 +42,7 @@ const Contact = ({ listing }: { listing: ListingType }) => {
           <textarea
             name='message'
             id='message'
-            rows='2'
+            rows={2}
             value={message}
             onChange={onChange}
             placeholder='Enter your message here...'

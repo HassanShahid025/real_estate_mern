@@ -11,11 +11,26 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase/firebase";
 
+type formDataType = {
+  imageUrls: string[];
+  name: string;
+  description: string;
+  address: string;
+  type: string;
+  bedrooms: number;
+  bathrooms: number;
+  regularPrice: number;
+  discountPrice: number;
+  offer: boolean;
+  parking: boolean;
+  furnished: boolean;
+}
+
 const CreateListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const [files, setFiles] = useState<FileList | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formDataType>({
     imageUrls: [],
     name: "",
     description: "",
@@ -90,15 +105,13 @@ const CreateListing = () => {
       });
   };
 
-  const handleImageSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (files?.length > 0 && files?.length + formData.imageUrls.length < 7) {
+  const handleImageSubmit = () => {
+    if (files!.length > 0 && files!.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
 
-      for (let i = 0; i < files?.length; i++) {
+      for (let i = 0; i < files!.length; i++) {
         promises.push(storeImage(files![i]));
       }
 
@@ -111,7 +124,7 @@ const CreateListing = () => {
           setImageUploadError(false);
           setUploading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setUploading(false);
           setImageUploadError("Image upload failed (2mb max per image)");
         });
@@ -171,7 +184,7 @@ const CreateListing = () => {
         setError(data.message);
       }
       navigate(`/listing/${data._id}`);
-    } catch (error) {
+    } catch (error:unknown) {
       setError(error.message);
       setLoading(false);
     }
@@ -189,8 +202,8 @@ const CreateListing = () => {
             placeholder="Name"
             className="border p-3 rounded-lg"
             id="name"
-            maxLength="62"
-            minLength="10"
+            maxLength={62}
+            minLength={10}
             required
             onChange={handleChange}
             value={formData.name}

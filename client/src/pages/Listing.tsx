@@ -52,7 +52,8 @@ const Listing = () => {
         setListing(data);
         setError(false);
       } catch (error) {
-        setError(error);
+        setError("Error occured. Please try again later.");
+        console.log(error)
       }
       setLoading(false);
     };
