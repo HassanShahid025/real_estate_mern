@@ -11,7 +11,13 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://real-estate-mern-client.vercel.app",
+    optionsSuccessStatus: 200,
+    preflightContinue: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
