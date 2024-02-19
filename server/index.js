@@ -10,6 +10,9 @@ import cors from "cors";
 
 dotenv.config();
 
+
+
+const app = express();
 app.use(
   cors({
     origin: ["https://real-estate-mern-nine.vercel.app"],
@@ -17,8 +20,6 @@ app.use(
     credentials: true,
   })
 );
-
-const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
