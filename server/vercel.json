@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "/"
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://real-estate-mern-server.vercel.app/api/$1"
+    }
   ]
 }
