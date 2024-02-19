@@ -11,13 +11,13 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-// app.use(
-//   cors({
-//     origin: ["https://real-estate-mern-nine.vercel.app"],
-//     methods: ["GET", "POST", "PATCH", "DELETE"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["https://real-estate-mern-nine.vercel.app/"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
