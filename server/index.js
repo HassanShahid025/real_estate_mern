@@ -11,6 +11,11 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
+app.use((req, res, next) => {
+  console.log(`Requested URL: ${req.url}`);
+  next();
+});
+
 app.use(
   cors({
     origin: "https://real-estate-mern-client.vercel.app",
