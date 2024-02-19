@@ -5,10 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      '/api':{
-        target:'https://real-estate-mern-4zdz.vercel.app/',
-        secure:true,
-      }
+      '/api': {
+        target: 'https://real-estate-mern-4zdz.vercel.app',
+        changeOrigin: true,
+      },
     }
   },
   plugins: [react()],
