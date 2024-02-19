@@ -14,7 +14,7 @@ import { app } from "../firebase/firebase";
 const UpdateListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
-  const params = useParams()
+  const params = useParams();
   const [files, setFiles] = useState<FileList | null>(null);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -40,19 +40,19 @@ const UpdateListing = () => {
 
   useEffect(() => {
     const fetchListing = async () => {
-        const listingId = params.id;
-    
-        const res = await fetch(`/api/listing/get/${listingId}`);
-        const data = await res.json();
-        if (data.success === false) {
-            console.log(data.message)
-            return
-        }
-        setFormData(data)
-    }
+      const listingId = params.id;
 
-    fetchListing()
-  },[params.id])
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+
+    fetchListing();
+  }, [params.id]);
 
   const handleChange = (
     e:
@@ -107,15 +107,13 @@ const UpdateListing = () => {
       });
   };
 
-  const handleImageSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (files?.length > 0 && files?.length + formData.imageUrls.length < 7) {
+  const handleImageSubmit = () => {
+    if (files!.length > 0 && files!.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
 
-      for (let i = 0; i < files?.length; i++) {
+      for (let i = 0; i < files!.length; i++) {
         promises.push(storeImage(files![i]));
       }
 
@@ -128,8 +126,9 @@ const UpdateListing = () => {
           setImageUploadError(false);
           setUploading(false);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           setUploading(false);
+          console.log(err.message);
           setImageUploadError("Image upload failed (2mb max per image)");
         });
     } else {
@@ -188,7 +187,7 @@ const UpdateListing = () => {
         setError(data.message);
       }
       navigate(`/listing/${data._id}`);
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
       setLoading(false);
     }
@@ -206,8 +205,8 @@ const UpdateListing = () => {
             placeholder="Name"
             className="border p-3 rounded-lg"
             id="name"
-            maxLength="62"
-            minLength="10"
+            maxLength={62}
+            minLength={10}
             required
             onChange={handleChange}
             value={formData.name}

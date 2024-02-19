@@ -23,8 +23,10 @@ const SignUp = () => {
   const handleShowSuccessMessage = () => {
     setShowSuccessMessage(true)
     const timer = setTimeout(() => {
+      setShowSuccessMessage(false)
       navigate('/sign-in')
     },2000)
+    return () => clearTimeout(timer);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,7 +48,7 @@ const SignUp = () => {
       }
       setError(null);
       handleShowSuccessMessage()
-    } catch (error: unknown) {
+    } catch (error: any) {
       setLoading(false);
       setError(error.message);
     }
