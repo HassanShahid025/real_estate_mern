@@ -16,6 +16,7 @@ app.use(
     origin: "https://real-estate-mern-client.vercel.app",
     optionsSuccessStatus: 200,
     preflightContinue: true,
+    credentials: true,
   })
 );
 app.use(express.json());
