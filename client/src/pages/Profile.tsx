@@ -96,7 +96,6 @@ const Profile = () => {
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -149,6 +148,7 @@ const Profile = () => {
         return;
       }
       dispatch(signOutUserSuccess());
+      navi
     } catch (error: any) {
       dispatch(signOutUserFailure(error.message));
     }
@@ -191,7 +191,7 @@ const Profile = () => {
     }
   };
 
-  console.log(currentUser!.avatar);
+
 
   return (
     <div className="p-3 max-w-lg mx-auto">
