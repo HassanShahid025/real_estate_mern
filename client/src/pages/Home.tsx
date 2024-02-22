@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const response = await fetch("/api/listing/get?offer=true&limit=4");
+        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?offer=true&limit=4");
         const data = await response.json();
         setOfferListings(data);
         fetchRentListings();
@@ -28,7 +28,7 @@ const Home = () => {
     };
     const fetchRentListings = async () => {
       try {
-        const response = await fetch("/api/listing/get?type=rent&limit=4");
+        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?type=rent&limit=4");
         const data = await response.json();
         setRentListings(data);
         fetchSaleListings();
@@ -38,7 +38,7 @@ const Home = () => {
     };
     const fetchSaleListings = async () => {
       try {
-        const response = await fetch("/api/listing/get?type=sale&limit=4");
+        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?type=sale&limit=4");
         const data = await response.json();
         setSaleListings(data);
       } catch (error) {
