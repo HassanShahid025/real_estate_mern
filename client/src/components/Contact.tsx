@@ -20,7 +20,7 @@ const Contact = ({ listing }: { listing: ListingType }) => {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/user/${listing.userRef}`);
+        const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/${listing.userRef}`);
         const data = await res.json();
         console.log(data)
         setLandlord(data);

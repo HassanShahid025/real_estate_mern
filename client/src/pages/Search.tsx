@@ -53,7 +53,7 @@ const Search = () => {
       setLoading(true);
       setShowMore(false)
       const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get?${searchQuery}`);
       const data = await res.json();
       data.length > 8 ? setShowMore(true) : setShowMore(false);
       setListings(data);
@@ -125,7 +125,7 @@ const Search = () => {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex.toString());
     const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get?${searchQuery}`);
     const data = await res.json();
     if (data.length < 9) {
       setShowMore(false);

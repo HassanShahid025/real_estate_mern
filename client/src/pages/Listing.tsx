@@ -43,7 +43,7 @@ const Listing = () => {
     const fetchListing = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/listing/get/${params.id}`);
+        const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get/${params.id}`);
         const data = await res.json();
         if (data.success === false) {
           setError(data.message);

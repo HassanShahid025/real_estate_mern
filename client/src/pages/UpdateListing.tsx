@@ -43,7 +43,7 @@ const UpdateListing = () => {
     const fetchListing = async () => {
       const listingId = params.id;
 
-      const res = await fetch(`/api/listing/get/${listingId}`);
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get/${listingId}`);
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -173,7 +173,7 @@ const UpdateListing = () => {
         return setError("Discount price cannot be greater than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.id}`, {
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/update/${params.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
