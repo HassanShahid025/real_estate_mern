@@ -148,7 +148,6 @@ const Profile = () => {
         return;
       }
       dispatch(signOutUserSuccess());
-      navi
     } catch (error: any) {
       dispatch(signOutUserFailure(error.message));
     }
