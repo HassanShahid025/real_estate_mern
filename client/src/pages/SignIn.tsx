@@ -3,19 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { signInFailure, signInStart, signInSuccess } from "../redux/features/userSlice";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/features/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import OAuth from "../components/OAuth";
+import { useCookies } from "react-cookie";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [cookies, setCookies] = useCookies();
 
-  const {loading, error} = useSelector((state:RootState) => state.user)
+  const { loading, error } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -23,35 +29,41 @@ const SignIn = () => {
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
-  }
-
-  
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      dispatch(signInStart())
-      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signin", {
-        method: "POST",
-        credentials:"include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      dispatch(signInStart());
+      const res = await fetch(
+        "https://real-estate-mern-server.vercel.app/api/auth/signin",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signInFailure(data.message))
+        dispatch(signInFailure(data.message));
         return;
       }
-      dispatch(signInSuccess(data))
+      const expiryDate = new Date(); // Create a new Date object
+      expiryDate.setDate(expiryDate.getDate() + 7);
+
+      setCookies("access_token", data.token, {
+        expires: expiryDate,
+        path: "/",
+      });
+      dispatch(signInSuccess(data.rest));
       navigate("/");
     } catch (error: any) {
-      dispatch(signInFailure(error.message))
+      dispatch(signInFailure(error.message));
     }
   };
-
-
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -70,7 +82,7 @@ const SignIn = () => {
           <div className="flex items-center">
             <input
               required
-              type={showPassword ? "text":"password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               className="border p-3 rounded-lg flex-1"
               id="password"
@@ -78,11 +90,16 @@ const SignIn = () => {
             />
             <div className="absolute right-3">
               {showPassword ? (
-                  <BiShow className="text-gray-500 cursor-pointer" onClick={handleShowPassword}/>
+                <BiShow
+                  className="text-gray-500 cursor-pointer"
+                  onClick={handleShowPassword}
+                />
               ) : (
-                <BiHide className="text-gray-500 cursor-pointer" onClick={handleShowPassword}/>
+                <BiHide
+                  className="text-gray-500 cursor-pointer"
+                  onClick={handleShowPassword}
+                />
               )}
-              
             </div>
           </div>
         </div>
@@ -93,7 +110,7 @@ const SignIn = () => {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
-        <OAuth/>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>Dont have an account?</p>

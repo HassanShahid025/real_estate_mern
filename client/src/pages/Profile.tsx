@@ -25,6 +25,7 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 import { ListingType } from "./Listing";
+import { useCookies } from "react-cookie";
 
 // type formDataType = {
 //   username: string;
@@ -55,6 +56,7 @@ const Profile = () => {
   const [functionStart, setFunctionStart] = useState(false);
 
   const [userListings, setUserListings] = useState<ListingType[]>([]);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -147,6 +149,7 @@ const Profile = () => {
         dispatch(signOutUserFailure(data.message));
         return;
       }
+      removeCookie('access_token')
       dispatch(signOutUserSuccess());
     } catch (error: any) {
       dispatch(signOutUserFailure(error.message));
