@@ -16,6 +16,7 @@ app.use(
     origin: "https://real-estate-mern-client.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
+    exposedHeaders:["set-cookie"]
     
   })
 );

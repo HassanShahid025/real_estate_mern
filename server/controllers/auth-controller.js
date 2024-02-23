@@ -30,7 +30,7 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: false,
-        domain: ".vercel.app",
+        domain: "real-estate-mern-client.vercel.app",
         secure: true,
         sameSite:"none"
       })
