@@ -71,6 +71,7 @@ const Profile = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          credentials:"include"
         },
         body: JSON.stringify(formData),
       });
@@ -136,7 +137,7 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signout");
+      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signout",{credentials:"include"});
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -169,6 +170,7 @@ const Profile = () => {
     try {
       const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/delete/${id}`, {
         method: "DELETE",
+        credentials:"include"
       });
       const data = await res.json();
       setFunctionStart(false);
@@ -304,7 +306,7 @@ const Profile = () => {
         </p>
       )}
 
-      {userListings.length > 0 && (
+      {userListings.length === 0 && (
         <p className="text-red-500 mt-5">
         You have no listings
       </p>

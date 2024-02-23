@@ -43,7 +43,7 @@ const UpdateListing = () => {
     const fetchListing = async () => {
       const listingId = params.id;
 
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get/${listingId}`);
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/get/${listingId}`,{credentials:"include"});
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -177,6 +177,7 @@ const UpdateListing = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          credentials:"include"
         },
         body: JSON.stringify({
           ...formData,
