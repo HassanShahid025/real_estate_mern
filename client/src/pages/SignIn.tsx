@@ -59,7 +59,6 @@ const SignIn = () => {
         path: "/",
         domain:'.vercel.app',
         secure: true,
-        sameSite: 'none'
       });
       dispatch(signInSuccess(data.rest));
       navigate("/");
