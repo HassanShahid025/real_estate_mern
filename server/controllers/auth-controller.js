@@ -27,13 +27,11 @@ export const signin = async (req, res, next) => {
       expiresIn: "30d",
     });
     const { password: pass, ...rest } = validUser._doc;
-    // res
-    //   .cookie("access_token", token, {
-    //     httpOnly: false,
-    //     domain: "real-estate-mern-client.vercel.app",
-    //     secure: true,
-    //     sameSite:"None"
-    //   })
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        domain: "real-estate-mern-client.vercel.app",
+      })
       res.status(200)
       .json({rest,token});
   } catch (error) {
@@ -84,7 +82,7 @@ export const google = async (req, res, next) => {
 
 export const signout = (req, res, next) => {
   try {
-    // res.clearCookie("access_token");
+    res.clearCookie("access_token");
     res.status(200).json("User has been logged out");
   } catch (error) {
     next(error);
