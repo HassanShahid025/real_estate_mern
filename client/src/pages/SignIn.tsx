@@ -57,8 +57,6 @@ const SignIn = () => {
       setCookies("access_token", data.token, {
         expires: expiryDate,
         path: "/",
-        domain:'.vercel.app',
-        secure: true,
       });
       dispatch(signInSuccess(data.rest));
       navigate("/");
