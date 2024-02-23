@@ -56,7 +56,7 @@ const Profile = () => {
   const [functionStart, setFunctionStart] = useState(false);
 
   const [userListings, setUserListings] = useState<ListingType[]>([]);
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, , removeCookie] = useCookies();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);

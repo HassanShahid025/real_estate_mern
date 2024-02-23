@@ -16,7 +16,7 @@ import { useCookies } from "react-cookie";
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [cookies, setCookies] = useCookies();
+  const [, setCookies] = useCookies();
 
   const { loading, error } = useSelector((state: RootState) => state.user);
 
