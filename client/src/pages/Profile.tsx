@@ -48,7 +48,7 @@ const Profile = () => {
   );
   const [functionStart, setFunctionStart] = useState(false);
 
-  const [userListings, setUserListings] = useState<ListingType[]>([]);
+  const [userListings, setUserListings] = useState<ListingType[] | null>(null);
 
 
   const handleShowPassword = () => {
@@ -122,6 +122,7 @@ const Profile = () => {
       dispatch(deleteUserStart());
       const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/delete/${currentUser?._id}`, {
         method: "DELETE",
+        credentials:"include"
       });
       const data = await res.json();
       if (data.success === false) {
@@ -137,7 +138,7 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signout",{credentials:"include"});
+      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signout");
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -179,7 +180,7 @@ const Profile = () => {
         return;
       }
       setUserListings(
-        userListings?.filter((listing) => listing._id !== id)
+        userListings!.filter((listing) => listing._id !== id)
       );
     } catch (error:any) {
       setFunctionStart(false);
@@ -306,7 +307,7 @@ const Profile = () => {
         </p>
       )}
 
-      {userListings.length === 0 && (
+      {userListings && userListings.length === 0 && (
         <p className="text-red-500 mt-5">
         You have no listings
       </p>
