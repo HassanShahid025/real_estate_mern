@@ -27,13 +27,12 @@ export const signin = async (req, res, next) => {
       expiresIn: "30d",
     });
     const { password: pass, ...rest } = validUser._doc;
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-        domain: "real-estate-mern-client.vercel.app/profile",
-      })
-      res.status(200)
-      .json({rest,token});
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.status(200).json({ rest, token });
   } catch (error) {
     next(error);
   }
