@@ -14,8 +14,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://real-estate-mern-client.vercel.app",
-    optionsSuccessStatus: 200,
-    preflightContinue: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
 );
