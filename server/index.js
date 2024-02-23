@@ -17,7 +17,6 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
     exposedHeaders:["set-cookie"]
-    
   })
 );
 app.use(express.json());
