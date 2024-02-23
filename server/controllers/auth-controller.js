@@ -32,7 +32,7 @@ export const signin = async (req, res, next) => {
       secure: true,
       sameSite: "none",
     });
-    res.status(200).json({ rest, token });
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }
@@ -48,6 +48,8 @@ export const google = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
+          secure: true,
+          sameSite: "none",
         })
         .status(200)
         .json(rest);

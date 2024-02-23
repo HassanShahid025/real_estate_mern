@@ -25,14 +25,7 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 import { ListingType } from "./Listing";
-import { useCookies } from "react-cookie";
 
-// type formDataType = {
-//   username: string;
-//   email: string;
-//   password: string | null;
-//   avatar: string;
-// };
 
 const Profile = () => {
   const { currentUser, loading, error } = useSelector(
@@ -56,7 +49,7 @@ const Profile = () => {
   const [functionStart, setFunctionStart] = useState(false);
 
   const [userListings, setUserListings] = useState<ListingType[]>([]);
-  const [, , removeCookie] = useCookies();
+
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -149,7 +142,6 @@ const Profile = () => {
         dispatch(signOutUserFailure(data.message));
         return;
       }
-      removeCookie('access_token')
       dispatch(signOutUserSuccess());
     } catch (error: any) {
       dispatch(signOutUserFailure(error.message));
@@ -159,7 +151,7 @@ const Profile = () => {
   const handleShowListing = async () => {
     try {
       setShowlistingError(false);
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`,{credentials: "include"});
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`);
       const listings = await res.json();
       if (listings.success === false) {
         setShowlistingError(listings.message);

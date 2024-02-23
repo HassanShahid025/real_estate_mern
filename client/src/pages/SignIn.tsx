@@ -11,13 +11,11 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import OAuth from "../components/OAuth";
-import { useCookies } from "react-cookie";
+
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [, setCookies] = useCookies();
-
   const { loading, error } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
@@ -51,14 +49,7 @@ const SignIn = () => {
         dispatch(signInFailure(data.message));
         return;
       }
-      const expiryDate = new Date(); // Create a new Date object
-      expiryDate.setDate(expiryDate.getDate() + 7);
-
-      setCookies("access_token", data.token, {
-        expires: expiryDate,
-        path: "/",
-      });
-      dispatch(signInSuccess(data.rest));
+      dispatch(signInSuccess(data));
       navigate("/");
     } catch (error: any) {
       dispatch(signInFailure(error.message));
