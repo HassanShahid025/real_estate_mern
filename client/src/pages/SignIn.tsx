@@ -33,6 +33,7 @@ const SignIn = () => {
       dispatch(signInStart())
       const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signin", {
         method: "POST",
+        credentials:"include",
         headers: {
           "Content-Type": "application/json",
         },
