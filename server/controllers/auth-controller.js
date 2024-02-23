@@ -32,7 +32,7 @@ export const signin = async (req, res, next) => {
         httpOnly: false,
         domain: "real-estate-mern-client.vercel.app",
         secure: true,
-        sameSite:"none"
+        sameSite:None
       })
       .status(200)
       .json(rest);
