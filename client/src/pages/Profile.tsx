@@ -151,7 +151,7 @@ const Profile = () => {
   const handleShowListing = async () => {
     try {
       setShowlistingError(false);
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`);
+      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`,{credentials:"include"});
       const listings = await res.json();
       if (listings.success === false) {
         setShowlistingError(listings.message);
