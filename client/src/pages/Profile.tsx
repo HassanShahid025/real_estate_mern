@@ -78,7 +78,7 @@ const Profile = () => {
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
-        console.log('dataSuccessFalse'+data);
+        console.log('dataSuccessFalse '+data);
         return;
       }
       console.log(data);
@@ -86,6 +86,7 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (error: any) {
       dispatch(updateUserFailure(error.message));
+      console.log("catchBlock "+error);
     }
   };
 
