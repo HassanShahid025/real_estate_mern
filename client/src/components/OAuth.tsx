@@ -21,9 +21,10 @@ const OAuth = () => {
 
       const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/google", {
         method: "POST",
-        
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          credentials: "include"
         },
         body: JSON.stringify({
           name: displayName,
