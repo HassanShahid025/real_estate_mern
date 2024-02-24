@@ -171,6 +171,7 @@ const CreateListing = () => {
       setError(false);
       const res = await fetch("https://real-estate-mern-server.vercel.app/api/listing/create", {
         method: "POST",
+        credentials:"include",
         headers: {
           "Content-Type": "application/json",
           credentials:"include"

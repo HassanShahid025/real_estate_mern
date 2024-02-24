@@ -68,7 +68,7 @@ const Profile = () => {
         `https://real-estate-mern-server.vercel.app/api/user/update/${currentUser?._id}`,
         {
           method: "POST",
-          credentials:"include",
+          credentials:"include", //this will send jwt token in cookie to server
           headers: {
             "Content-Type": "application/json",
             credentials: "include"

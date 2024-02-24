@@ -175,6 +175,7 @@ const UpdateListing = () => {
       setError(false);
       const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/update/${params.id}`, {
         method: "PATCH",
+        credentials:"include",
         headers: {
           "Content-Type": "application/json",
           credentials:"include"
