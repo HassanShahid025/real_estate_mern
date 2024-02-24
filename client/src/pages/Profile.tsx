@@ -25,8 +25,6 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 import { ListingType } from "./Listing";
-
-
 const Profile = () => {
   const { currentUser, loading, error } = useSelector(
     (store: RootState) => store.user
@@ -50,7 +48,6 @@ const Profile = () => {
 
   const [userListings, setUserListings] = useState<ListingType[] | null>(null);
 
-
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -67,18 +64,22 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/update/${currentUser?._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          credentials:"include"
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `https://real-estate-mern-server.vercel.app/api/user/update/${currentUser?._id}`,
+        {
+          method: "POST",
+          mode:'no-cors',
+          headers: {
+            "Content-Type": "application/json",
+            credentials: "include"
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
-        console.log('dataSuccessFalse '+data);
+        console.log("dataSuccessFalse " + data);
         return;
       }
       console.log(data);
@@ -86,7 +87,7 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (error: any) {
       dispatch(updateUserFailure(error.message));
-      console.log("catchBlock "+error);
+      console.log("catchBlock " + error);
     }
   };
 
@@ -123,10 +124,13 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/delete/${currentUser?._id}`, {
-        method: "DELETE",
-        credentials:"include"
-      });
+      const res = await fetch(
+        `https://real-estate-mern-server.vercel.app/api/user/delete/${currentUser?._id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -141,7 +145,9 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("https://real-estate-mern-server.vercel.app/api/auth/signout");
+      const res = await fetch(
+        "https://real-estate-mern-server.vercel.app/api/auth/signout"
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -156,7 +162,10 @@ const Profile = () => {
   const handleShowListing = async () => {
     try {
       setShowlistingError(false);
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`,{credentials:"include"});
+      const res = await fetch(
+        `https://real-estate-mern-server.vercel.app/api/user/listings/${currentUser?._id}`,
+        { credentials: "include" }
+      );
       const listings = await res.json();
       if (listings.success === false) {
         setShowlistingError(listings.message);
@@ -172,26 +181,25 @@ const Profile = () => {
   const handleListingDelete = async (id: string) => {
     setFunctionStart(true);
     try {
-      const res = await fetch(`https://real-estate-mern-server.vercel.app/api/listing/delete/${id}`, {
-        method: "DELETE",
-        credentials:"include"
-      });
+      const res = await fetch(
+        `https://real-estate-mern-server.vercel.app/api/listing/delete/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       setFunctionStart(false);
       if (data.success === false) {
         console.log(data.message);
         return;
       }
-      setUserListings(
-        userListings!.filter((listing) => listing._id !== id)
-      );
-    } catch (error:any) {
+      setUserListings(userListings!.filter((listing) => listing._id !== id));
+    } catch (error: any) {
       setFunctionStart(false);
       console.log(error.message);
     }
   };
-
-
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -311,9 +319,7 @@ const Profile = () => {
       )}
 
       {userListings && userListings.length === 0 && (
-        <p className="text-red-500 mt-5">
-        You have no listings
-      </p>
+        <p className="text-red-500 mt-5">You have no listings</p>
       )}
 
       {userListings && userListings.length > 0 && (
