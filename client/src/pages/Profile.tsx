@@ -68,7 +68,6 @@ const Profile = () => {
         `https://real-estate-mern-server.vercel.app/api/user/update/${currentUser?._id}`,
         {
           method: "POST",
-          mode:'no-cors',
           headers: {
             "Content-Type": "application/json",
             credentials: "include"

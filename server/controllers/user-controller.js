@@ -23,7 +23,7 @@ export const updateUser = async (req, res, next) => {
       updatedFields = { ...updatedFields, password: req.body.password };
     }
 
-    console.log(req.body);
+    console.log(updatedFields)
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -32,7 +32,9 @@ export const updateUser = async (req, res, next) => {
       },
       { new: true }
     );
+    
     const { password, ...rest } = updatedUser._doc;
+    // console.log(updatedUser._doc)
     res.status(200).json(rest);
   } catch (error) {
     next(error);
