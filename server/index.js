@@ -16,12 +16,11 @@ app.use(
     origin: "https://real-estate-mern-client.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
-    exposedHeaders:["set-cookie"]
+    exposedHeaders: ["set-cookie"],
   })
 );
 app.use(express.json());
 app.use(cookieParser());
-
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);

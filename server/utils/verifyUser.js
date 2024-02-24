@@ -11,7 +11,7 @@ export const verifyToken = (req,res,next) => {
     jwt.verify(token,process.env.JWT_SECRET, (err,user) => {
         if(err) return next(errorHandler(403, 'Forbidden'));
 
-        req.user = user
+        req.user = user //user is actually id we saved in jwt in signup controller
         next(); //it will run the updateUser function given in route
     })
 } 
