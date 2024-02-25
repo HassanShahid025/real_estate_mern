@@ -1,5 +1,3 @@
-import React from "react";
-
 const ListingSkeliton = () => {
   return (
     <div className="px-8 py-8 flex justify-between flex-wrap  md:justify-around max-md:justify-center ">
