@@ -6,19 +6,21 @@ import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import { ListingType } from "./Listing";
 import ListingItem from "../components/ListingItem";
+import ListingSkeliton from "../components/ListingSkeliton";
 
 const Home = () => {
   const [offerListings, setOfferListings] = useState<ListingType[]>([]);
   const [saleListings, setSaleListings] = useState<ListingType[]>([]);
   const [rentListings, setRentListings] = useState<ListingType[]>([]);
 
-
   SwiperCore.use([Navigation]);
 
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?offer=true&limit=4");
+        const response = await fetch(
+          "https://real-estate-mern-server.vercel.app/api/listing/get?offer=true&limit=4"
+        );
         const data = await response.json();
         setOfferListings(data);
         fetchRentListings();
@@ -28,7 +30,9 @@ const Home = () => {
     };
     const fetchRentListings = async () => {
       try {
-        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?type=rent&limit=4");
+        const response = await fetch(
+          "https://real-estate-mern-server.vercel.app/api/listing/get?type=rent&limit=4"
+        );
         const data = await response.json();
         setRentListings(data);
         fetchSaleListings();
@@ -38,7 +42,9 @@ const Home = () => {
     };
     const fetchSaleListings = async () => {
       try {
-        const response = await fetch("https://real-estate-mern-server.vercel.app/api/listing/get?type=sale&limit=4");
+        const response = await fetch(
+          "https://real-estate-mern-server.vercel.app/api/listing/get?type=sale&limit=4"
+        );
         const data = await response.json();
         setSaleListings(data);
       } catch (error) {
@@ -88,6 +94,14 @@ const Home = () => {
             </SwiperSlide>
           ))}
       </Swiper>
+
+      {/* swiper skeliton */}
+      {offerListings.length === 0 && (
+        <div className="h-[500px] w-full bg-slate-200 animate-pulse rounded-lg"></div>
+      )}
+
+      {/* listing skeliton*/}
+      {offerListings.length === 0 && <ListingSkeliton />}
 
       {/* listing results for offer, sale and rent */}
 
