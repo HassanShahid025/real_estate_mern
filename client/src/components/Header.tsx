@@ -22,9 +22,7 @@ const Header = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
-   
-      setSearchTerm(searchTermFromUrl);
-    
+    searchTermFromUrl === null ? setSearchTerm("") : setSearchTerm(searchTermFromUrl);
   }, [location.search]);
 
   return (
